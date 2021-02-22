@@ -4,4 +4,4 @@ This is a MVC simple Shopping application with Visual Studio and connect it to a
 <HR/>
 DB Design
 <HR/>
-<img src= "./DB_Design.jpg” />
+<img src='./DB_Design.jpg' />
