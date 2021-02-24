@@ -7,7 +7,8 @@ const AddNewCustomer = (props) => {
   const [address, setaddress] = useState("");
   
   /* const [open, setOpen] = useState(false) */
-  
+
+
   
   useEffect(() => {
     console.log(name+address)

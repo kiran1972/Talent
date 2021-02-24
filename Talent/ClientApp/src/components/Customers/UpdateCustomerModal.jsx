@@ -17,7 +17,8 @@ const UpdateCustomerModal = (props) => {
     console.log("Customers:copyCustomer")
   setcname(customer.name)
   setcaddress(customer.address)
-  }
+    }
+
 
    useEffect(() => {
     console.log("UpdateCustomers:useEffect:Name: "+cname+" address: "+caddress);
