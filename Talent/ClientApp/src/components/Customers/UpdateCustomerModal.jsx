@@ -1,40 +1,62 @@
 import React, {useState, useEffect} from 'react'
-import { Form, Button, Header, Image, Modal } from 'semantic-ui-react'
+import { Form, Button, Header, Image, Modal, Portal, Segment } from 'semantic-ui-react'
 import axios from 'axios'
 import Customers from './Customers';
+// import Customers from './Customers';
 const UpdateCustomerModal = (props) => {
-  const {open, toggleUpdateModal, fetchCustomerData, customer} = props;
-  const [name, setname] = useState("");
-  const [address, setaddress] = useState("");
   
-  /* const [open, setOpen] = useState(false) */
+    /* const {open, toggleUpdateModal, fetchCustomerData, id, name, address} = props; */
+  const {open, toggleUpdateModal, fetchCustomerData, customer} = props; 
   
-  
-  /* useEffect(() => {
-    console.log(name+address)
-return() => {
-  console.log("UnMount a Component using Hook")
+  const [cid, setcid] = useState(customer.id);
+  const [cname, setcname] = useState(customer.name);
+  const [caddress, setcaddress] = useState(customer.address);
+  // const [open, setOpen] = useState(false) ;
 
-}
-  },[name,address])
-   */
-
-  const test =(e) => {
-    console.log(e.target.value);
-    e.persist();
-
-  let value = e.target.value;
-
-  this.setState(prevState => ({
-    item: { ...prevState.item,  [e.target.name]: value }
-  }))
+  const copyCustomer = (id) =>  {
+    console.log("Customers:copyCustomer")
+  setcname(customer.name)
+  setcaddress(customer.address)
   }
 
- const updateCustomer = (id) => { 
-  axios.put(`/Customers/PutCustomer/${id}`, {
-    name: name,
-    address: address
-  })
+   useEffect(() => {
+    console.log("UpdateCustomers:useEffect:Name: "+cname+" address: "+caddress);
+return() => {
+  console.log("UpdateCustomer:UnMount a Component using Hook")
+
+}
+  },[cname,caddress])
+   
+
+   const handleChange = ({target}) => {
+   console.log('event.name'+ target.name)
+   console.log('event.value'+ target.value)
+   
+    if(target.name === 'cname')
+    // setcname({ [target.name]: target.value });
+    setcname(target.value);
+    else if(target.name === 'caddress')
+    setcaddress({ [target.name]: target.value });
+ };
+
+
+
+  /* const test =(e) => {
+    console.log(e.target.value);
+  } 
+ */
+
+ const updateCustomer = (ccid) => { 
+  
+   console.log("UpdateCustomers:updateCustomer:Cid="+ccid+" CName: "+cname+" CAddress: "+caddress);
+        
+   let customer = {
+    id: ccid,
+    name: cname,
+    address: caddress
+   }
+
+  axios.put(`/Customers/PutCustomer/${ccid}`, customer )
   .then(function (res) {
     console.log(res);
     fetchCustomerData();
@@ -48,25 +70,26 @@ return() => {
 
   return (
     <Modal
-     open={open}
+    open={open}
      >
       <Modal.Header>Edit Customer</Modal.Header>
       <Modal.Content image>
         <Image size='medium' src='./online_customers.jpg' wrapped />
         <Modal.Description>
           <Header>Customer details</Header>
+          
           <Form>
     <Form.Field>
       <label>Customer Name</label>
-      {/* <input placeholder='Customer Name' onChange={(e) => setname(e.target.value)} value={customer.name} /> */}
-      <input placeholder='Customer Name' onChange={(e) => test(e)} value={customer.name} />
+      <input placeholder='Customer Name' name ='cname' defaultValue={customer.name} onChange={(e) =>  setcname(e.target.value)}  />
+      {/* <input placeholder='Customer Name' onChange={(e) => test(e)} value={name}  onChange={(e) => handleChange(e)}/> */}
     </Form.Field>
     <Form.Field>
       <label>Customer Address</label>
-      <input placeholder='Customer Address' onChange={(e) => setaddress(e.target.value)} value={customer.address} />
+      {/* <input placeholder='Customer Address' name ='caddress' value={caddress} onChange={(e) => setcaddress(e.target.value)} /> */}
+      <input placeholder='Customer Address' name ='caddress' defaultValue={customer.address} onChange={(e) => setcaddress(e.target.value)} />
     </Form.Field>
-  </Form>
-        </Modal.Description>
+  </Form></Modal.Description>
       </Modal.Content>
       <Modal.Actions>
         <Button color='black' onClick={() => toggleUpdateModal()}>
@@ -80,8 +103,8 @@ return() => {
           positive
         />
       </Modal.Actions>
-    </Modal>
+    </Modal>     
   )
-}
+  }
 
 export default UpdateCustomerModal

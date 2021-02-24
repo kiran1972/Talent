@@ -11,7 +11,14 @@ export default class Customers extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { customers: [], loaded: false, openCreateModal: false, openDeleteModal: false, openUpdateModal: false, customer: {} };
+        this.state = { 
+            customers: [], 
+            loaded: false, 
+            openCreateModal: false, 
+            openDeleteModal: false, 
+            openUpdateModal: false, 
+            customer: {} 
+                   };
         this.fetchCustomerData = this.fetchCustomerData.bind(this);
         }
 
@@ -63,7 +70,7 @@ export default class Customers extends Component {
 
     setStateDeleteModal = (customer) => {
         this.setState({customer: customer})
-        console.log("Customers:setStateDeleteModal");
+        console.log("Customers:setStateDeleteModal:Name: "+customer.name+" address: "+customer.address);
         this.toggleDeleteModal();
     }
 
@@ -80,7 +87,7 @@ export default class Customers extends Component {
    
     setStateUpdateModal = (customer) => {
         this.setState({customer: customer})
-        console.log("Customers:setStateUpdateModal");
+        console.log("Customers:setStateUpdateModal:Name: "+customer.name+" address: "+customer.address);
         this.toggleUpdateModal();
     }
 
@@ -91,14 +98,29 @@ export default class Customers extends Component {
         const openCreateModal = this.state.openCreateModal;
         const openDeleteModal = this.state.openDeleteModal;
         const openUpdateModal = this.state.openUpdateModal;
-        
         const customer = this.state.customer;
+        console.log("Customers:render:Name: "+customer.name+" address: "+customer.address);
         if (loaded) {
             return (
                 <div>
-                    <AddNewCustomer open={openCreateModal} toggleCreateModal={() => this.toggleCreateModal()} fetchCustomerData={() => this.fetchCustomerData()}  />
-                    <DeleteCustomerModal open={openDeleteModal} toggleDeleteModal={() => this.toggleDeleteModal()} fetchCustomerData={() => this.fetchCustomerData()} customer={customer} />
-                    <UpdateCustomerModal open={openUpdateModal} toggleUpdateModal={() => this.toggleUpdateModal()} fetchCustomerData={() => this.fetchCustomerData()} customer={customer} />
+                    <AddNewCustomer 
+                    open={openCreateModal} 
+                    toggleCreateModal={() => this.toggleCreateModal()} 
+                    fetchCustomerData={() => this.fetchCustomerData()}
+                    name={customer.name}  />
+
+                    <DeleteCustomerModal 
+                    open={openDeleteModal} 
+                    toggleDeleteModal={() => this.toggleDeleteModal()} 
+                    fetchCustomerData={() => this.fetchCustomerData()} 
+                    customer={customer} />
+                    
+                    <UpdateCustomerModal 
+                    open={openUpdateModal} 
+                    toggleUpdateModal={() => this.toggleUpdateModal()} 
+                    fetchCustomerData={() => this.fetchCustomerData()} 
+                    customer={customer} />
+
                     <h1> C U S T O M E R S...... </h1>
                     <Button color='blue' content='Add New Customer' onClick={this.toggleCreateModal} />
                     <Button color='green' content='Refresh' onClick={this.fetchCustomerData} />

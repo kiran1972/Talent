@@ -4,8 +4,8 @@ import axios from 'axios'
 
 const DeleteCustomerModal = (props) => {
   const {open, toggleDeleteModal, fetchCustomerData, customer } = props;
-//   const [name, setname] = useState("");
-//   const [address, setaddress] = useState("");
+   const [name, setname] = useState(customer.name);
+   const [address, setaddress] = useState(customer.address);
   
   /* const [open, setOpen] = useState(false) */
   
@@ -18,9 +18,11 @@ return() => {
   },[])
   
 
-  const test =(e) => {
+
+
+ /*  const test =(e) => {
     console.log(e.target.value);
-  }
+  } */
 
  /* const createCustomer = () => { 
   axios.post('/Customers/PostCustomer', {
@@ -37,6 +39,7 @@ return() => {
     toggleModal();
   });
  } */
+
 
 
 const deleteCustomer = (id) =>  {
@@ -73,19 +76,15 @@ const deleteCustomer = (id) =>  {
           <Form.Field>
       <Label as='a' color='red' ribbon>Customer ID</Label>
       <label>{customer.id}</label>
-      {/* <input placeholder='Customer Name' onChange={(e) => setname(e.target.value)} /> */}
     </Form.Field>
     <Form.Field>
       <Label as='a' color='blue' ribbon>Customer Name</Label>
       <label>{customer.name}</label>
-      {/* <input placeholder='Customer Name' onChange={(e) => setname(e.target.value)} /> */}
     </Form.Field>
     <Form.Field>
       <Label as='a' color='green' ribbon>Customer Address       </Label>
       <label>{customer.address}</label>
-      {/* <input placeholder='Customer Address' onChange={(e) => setaddress(e.target.value)} /> */}
     </Form.Field>
-    
   </Form>
         </Modal.Description>
       </Modal.Content>

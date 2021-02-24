@@ -18,9 +18,6 @@ return() => {
   },[name,address])
   
 
-  const test =(e) => {
-    console.log(e.target.value);
-  }
 
  const createCustomer = () => { 
   axios.post('/Customers/PostCustomer', {
@@ -49,7 +46,7 @@ return() => {
           <Form>
     <Form.Field>
       <label>Customer Name</label>
-      <input placeholder='Customer Name' onChange={(e) => setname(e.target.value)} />
+      <input placeholder='Customer Name' value={name} onChange={(e) => setname(e.target.value)} />
     </Form.Field>
     <Form.Field>
       <label>Customer Address</label>
