@@ -5,35 +5,34 @@ import axios from 'axios'
 /************************************* 
  * Function to Add/Create the Customer
  **************************************/
-const AddNewCustomer = (props) => {
-  const {open, toggleCreateModal, fetchCustomerData} = props;
+const AddNewProduct = (props) => {
+  const {open, toggleCreateModal, fetchProductData} = props;
   const [name, setname] = useState("");
-  const [address, setaddress] = useState("");
+  const [price, setprice] = useState("");
   
-  /* const [open, setOpen] = useState(false) */
 
 
   
   useEffect(() => {
-    console.log(name+address)
+    console.log(name+price)
 return() => {
   console.log("UnMount a Component using Hook")
 
 }
-  },[name,address])
+  },[name,price])
   
 
 /************************************* 
- * Function to Add/Create Customer using axios
+ * Function to Add/Create the Customer using axios
  **************************************/
- const createCustomer = () => { 
-  axios.post('/Customers/PostCustomer', {
+ const createProduct = () => { 
+  axios.post('/Products/PostProduct', {
     name: name,
-    address: address
+    price: price
   })
   .then(function (res) {
     console.log(res);
-    fetchCustomerData();
+    fetchProductData();
     toggleCreateModal();
   })
   .catch(function (err) {
@@ -42,7 +41,7 @@ return() => {
   });
  }
 
- /************************************* 
+  /************************************* 
  * Using Semantic UI Modal & Form as UI
  **************************************/
   return (
@@ -56,12 +55,12 @@ return() => {
           <Header>Default Profile Image</Header>
           <Form>
     <Form.Field>
-      <label>Customer Name</label>
-      <input placeholder='Customer Name' value={name} onChange={(e) => setname(e.target.value)} />
+      <label>Product Name</label>
+      <input placeholder='Product Name' value={name} onChange={(e) => setname(e.target.value)} />
     </Form.Field>
     <Form.Field>
-      <label>Customer Address</label>
-      <input placeholder='Customer Address' onChange={(e) => setaddress(e.target.value)} />
+      <label>Product Price</label>
+      <input placeholder='Product price' onChange={(e) => setprice(e.target.value)} />
     </Form.Field>
   </Form>
         </Modal.Description>
@@ -74,7 +73,7 @@ return() => {
           content="Create"
           labelPosition='right'
           icon='checkmark'
-          onClick={() => createCustomer()}
+          onClick={() => createProduct()}
           positive
         />
       </Modal.Actions>
@@ -82,4 +81,4 @@ return() => {
   )
 }
 
-export default AddNewCustomer
+export default AddNewProduct

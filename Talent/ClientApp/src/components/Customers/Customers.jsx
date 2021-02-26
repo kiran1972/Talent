@@ -5,11 +5,13 @@ import AddNewCustomer from './AddNewCustomer';
 import DeleteCustomerModal from './DeleteCustomerModal';
 import UpdateCustomerModal from './UpdateCustomerModal';
 
+/************************************* 
+ * Class to CURD the Customer data
+ **************************************/
 export default class Customers extends Component {
     static displayName = Customers.name;
 
-
-
+    /***********************Constructor************/ 
     constructor(props) {
         super(props);
         this.state = { 
@@ -23,6 +25,9 @@ export default class Customers extends Component {
         this.fetchCustomerData = this.fetchCustomerData.bind(this);
         }
 
+ /************************************* 
+ * Function to Fetch the Customer Data
+ **************************************/
     fetchCustomerData() {
         console.log("Customers:fetchCustomerData")
         axios.get('/Customers/GetCustomer')
@@ -48,18 +53,30 @@ export default class Customers extends Component {
     }
 
     
-
+/************************************************************* 
+ * Functions to Learn about the life Cycle of React components
+ *************************************************************/
+ 
     componentDidMount() {
         console.log("Customers:componentDidMount");
 
         this.fetchCustomerData();
     }
 
+
+  /************************************************************* 
+ * Functions to  toggle the status of openCreateModal between true and false
+ * to Open or notopen the Modal(Child Component AddNewCustomer)
+ *************************************************************/
     toggleCreateModal = () => {
         this.setState({openCreateModal: !this.state.openCreateModal})
         console.log("Customers:toggleCreateModal")
     }
 
+/************************************************************* 
+ * Functions to  toggle the status of openDeleteModal between true and false
+ * to Open or notopen the Modal(Child Component DeleteCustomerModal)
+ *************************************************************/
     toggleDeleteModal = () => {
         this.setState({
             openDeleteModal: !this.state.openDeleteModal
@@ -69,13 +86,21 @@ export default class Customers extends Component {
 
     }
 
+
+/************************************************************* 
+ * Functions setStateDeleteModal  copy the Customer Row to customer variable which can be passed to
+ *  the DeleteCustomerModal(Child Component )
+ *************************************************************/
     setStateDeleteModal = (customer) => {
         this.setState({customer: customer})
         console.log("Customers:setStateDeleteModal:Name: "+customer.name+" address: "+customer.address);
         this.toggleDeleteModal();
     }
 
-
+ /************************************************************* 
+ * Functions to  toggle the status of openUpdateModal between true and false
+ * to Open or notopen the Modal(Child Component UpdateCustomerModal)
+ *************************************************************/
     toggleUpdateModal = () => {
         this.setState({
             openUpdateModal: !this.state.openUpdateModal
@@ -85,13 +110,19 @@ export default class Customers extends Component {
 
     }
 
-   
+/************************************************************* 
+ * Functions setStateUpdateModal copy the Customer Row to customer variable which can be passed to
+ *  the UpdateCustomerModal(Child Component )
+ *************************************************************/
     setStateUpdateModal = (customer) => {
         this.setState({customer: customer})
         console.log("Customers:setStateUpdateModal:Name: "+customer.name+" address: "+customer.address);
         this.toggleUpdateModal();
     }
-
+    
+/************************************* 
+ * Using Semantic UI Modal & Form  as UI
+ **************************************/
     render() {
         console.log("Customers:render");
         const customers = this.state.customers;
@@ -108,7 +139,7 @@ export default class Customers extends Component {
                     open={openCreateModal} 
                     toggleCreateModal={() => this.toggleCreateModal()} 
                     fetchCustomerData={() => this.fetchCustomerData()}
-                    name={customer.name}  />
+                     />
 
                     <DeleteCustomerModal 
                     open={openDeleteModal} 

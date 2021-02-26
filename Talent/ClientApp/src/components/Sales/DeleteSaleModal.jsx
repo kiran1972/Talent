@@ -3,11 +3,10 @@ import { Label, Form, Button, Header, Image, Modal } from 'semantic-ui-react'
 import axios from 'axios'
 
 /************************************* 
- * Function to get approval to Delete the Customer
+ * Function to get approval to Delete the Store
  **************************************/
-
-const DeleteCustomerModal = (props) => {
-  const {open, toggleDeleteModal, fetchCustomerData, customer } = props;
+const DeleteSaleModal = (props) => {
+  const {open, toggleDeleteModal, fetchSaleData, sale } = props;
   
   
   useEffect(() => {
@@ -18,18 +17,21 @@ return() => {
   },[])
   
 
+
+
+
  /*  const test =(e) => {
     console.log(e.target.value);
   } */
 
- /* const createCustomer = () => { 
-  axios.post('/Customers/PostCustomer', {
+ /* const createSale = () => { 
+  axios.post('/Sales/PostSale', {
     name: name,
     address: address
   })
   .then(function (res) {
     console.log(res);
-    fetchCustomerData();
+    fetchSaleData();
     toggleModal();
   })
   .catch(function (err) {
@@ -41,14 +43,16 @@ return() => {
 
 
  /************************************* 
- * Function to Delete the Customer
+ * Function to Delete the Store
  **************************************/
-const deleteCustomer = (id) =>  {
-        console.log("Customers:deleteCustomer")
-        axios.delete(`/Customers/DeleteCustomer/${id}`)
+const deleteSale = (id) =>  {
+        console.log("Sales:deleteSale")
+        axios.delete(`/Sales/DeleteSale/${id}`)
             .then( function(res)  {
+                // handle success
+                //console.log(res.data);
                 console.log(res);
-                fetchCustomerData();
+                fetchSaleData();
                 toggleDeleteModal();
             })
             .catch(function(err)  {
@@ -68,24 +72,32 @@ const deleteCustomer = (id) =>  {
     <Modal
      open={open}
      >
-      <Modal.Header>Are you sure you want to delete Customer ?</Modal.Header>
+      <Modal.Header>Are you sure you want to delete Sale ?</Modal.Header>
       <Modal.Content image>
-        <Image size='medium' src='./online_customers.jpg' wrapped />
+        <Image size='medium' src='./online_sales.jpg' wrapped />
         <Modal.Description>
-          <Header>Customer details</Header>
+          <Header>Sale details</Header>
           <Form>
           <Form.Field>
-      <Label as='a' color='red' ribbon>Customer ID</Label>
-      <label>{customer.id}</label>
+      <Label as='a' color='red' ribbon>Sale ID</Label>
+      <label>{sale.id}</label>
     </Form.Field>
     <Form.Field>
       <Label as='a' color='blue' ribbon>Customer Name</Label>
-      <label>{customer.name}</label>
+      <label>{sale.customerid}</label>
     </Form.Field>
     <Form.Field>
-      <Label as='a' color='green' ribbon>Customer Address       </Label>
-      <label>{customer.address}</label>
+      <Label as='a' color='green' ribbon>Product Name</Label>
+      <label>{sale.productid}</label>
     </Form.Field>
+    <Form.Field>
+      <Label as='a' color='green' ribbon>Store Name</Label>
+      <label>{sale.storeid}</label>
+      <Form.Field>
+      <Label as='a' color='green' ribbon>Date-Time Sold</Label>
+      <label>{sale.datesold}</label>
+    </Form.Field>
+  </Form.Field>
   </Form>
         </Modal.Description>
       </Modal.Content>
@@ -97,7 +109,7 @@ const deleteCustomer = (id) =>  {
           content="Yes"
           color='black'
           icon='checkmark'
-          onClick={() => deleteCustomer(customer.id)}
+          onClick={() => deleteSale(sale.id)}
           positive
         />
       </Modal.Actions>
@@ -105,4 +117,4 @@ const deleteCustomer = (id) =>  {
   )
 }
 
-export default DeleteCustomerModal
+export default DeleteSaleModal

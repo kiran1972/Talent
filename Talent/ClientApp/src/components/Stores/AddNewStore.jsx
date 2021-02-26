@@ -3,10 +3,10 @@ import { Form, Button, Header, Image, Modal } from 'semantic-ui-react'
 import axios from 'axios'
 
 /************************************* 
- * Function to Add/Create the Customer
+ * Function to Add/Create the Store
  **************************************/
-const AddNewCustomer = (props) => {
-  const {open, toggleCreateModal, fetchCustomerData} = props;
+const AddNewStore = (props) => {
+  const {open, toggleCreateModal, fetchStoreData} = props;
   const [name, setname] = useState("");
   const [address, setaddress] = useState("");
   
@@ -24,16 +24,16 @@ return() => {
   
 
 /************************************* 
- * Function to Add/Create Customer using axios
+ * Function to Add/Create the Store using axios
  **************************************/
- const createCustomer = () => { 
-  axios.post('/Customers/PostCustomer', {
+ const createStore = () => { 
+  axios.post('/Stores/PostStore', {
     name: name,
     address: address
   })
   .then(function (res) {
     console.log(res);
-    fetchCustomerData();
+    fetchStoreData();
     toggleCreateModal();
   })
   .catch(function (err) {
@@ -41,10 +41,6 @@ return() => {
     toggleCreateModal();
   });
  }
-
- /************************************* 
- * Using Semantic UI Modal & Form as UI
- **************************************/
   return (
     <Modal
      open={open}
@@ -56,12 +52,12 @@ return() => {
           <Header>Default Profile Image</Header>
           <Form>
     <Form.Field>
-      <label>Customer Name</label>
-      <input placeholder='Customer Name' value={name} onChange={(e) => setname(e.target.value)} />
+      <label>Store Name</label>
+      <input placeholder='Store Name' value={name} onChange={(e) => setname(e.target.value)} />
     </Form.Field>
     <Form.Field>
-      <label>Customer Address</label>
-      <input placeholder='Customer Address' onChange={(e) => setaddress(e.target.value)} />
+      <label>Store Address</label>
+      <input placeholder='Store Address' onChange={(e) => setaddress(e.target.value)} />
     </Form.Field>
   </Form>
         </Modal.Description>
@@ -74,7 +70,7 @@ return() => {
           content="Create"
           labelPosition='right'
           icon='checkmark'
-          onClick={() => createCustomer()}
+          onClick={() => createStore()}
           positive
         />
       </Modal.Actions>
@@ -82,4 +78,4 @@ return() => {
   )
 }
 
-export default AddNewCustomer
+export default AddNewStore

@@ -3,37 +3,41 @@ import { Form, Button, Header, Image, Modal } from 'semantic-ui-react'
 import axios from 'axios'
 
 /************************************* 
- * Function to Add/Create the Customer
+ * Function to Add/Create the Store
  **************************************/
-const AddNewCustomer = (props) => {
-  const {open, toggleCreateModal, fetchCustomerData} = props;
-  const [name, setname] = useState("");
-  const [address, setaddress] = useState("");
+const AddNewSale = (props) => {
+  const {open, toggleCreateModal, fetchSaleData} = props;
+  const [cid, setcid] = useState();
+  const [pid, setpid] = useState();
+  const [sid, setsid] = useState();
+  const [sdate, setsdate] = useState();
   
   /* const [open, setOpen] = useState(false) */
 
 
   
   useEffect(() => {
-    console.log(name+address)
+    console.log("Customer id: "+cid+" Product id: "+pid+" Store id: "+sid+" Sale date: "+sdate)
 return() => {
   console.log("UnMount a Component using Hook")
 
 }
-  },[name,address])
+  },)
   
 
 /************************************* 
- * Function to Add/Create Customer using axios
+ * Function to Add/Create Store using axios
  **************************************/
- const createCustomer = () => { 
-  axios.post('/Customers/PostCustomer', {
-    name: name,
-    address: address
+ const createSale = () => { 
+  axios.post('/Sales/PostSale', {
+    productid: pid,
+    customerid: cid,
+    storeid: sid,
+    datesold:sdate
   })
   .then(function (res) {
     console.log(res);
-    fetchCustomerData();
+    fetchSaleData();
     toggleCreateModal();
   })
   .catch(function (err) {
@@ -42,10 +46,10 @@ return() => {
   });
  }
 
- /************************************* 
+  /************************************* 
  * Using Semantic UI Modal & Form as UI
  **************************************/
-  return (
+ return (
     <Modal
      open={open}
      >
@@ -56,12 +60,20 @@ return() => {
           <Header>Default Profile Image</Header>
           <Form>
     <Form.Field>
-      <label>Customer Name</label>
-      <input placeholder='Customer Name' value={name} onChange={(e) => setname(e.target.value)} />
+      <label>Customer id</label>
+      <input placeholder='Customer id' defaultValue={cid} onChange={(e) => setcid(e.target.value)} />
     </Form.Field>
     <Form.Field>
-      <label>Customer Address</label>
-      <input placeholder='Customer Address' onChange={(e) => setaddress(e.target.value)} />
+      <label>Product id</label>
+      <input placeholder='Product id' defaultValue={pid} onChange={(e) => setpid(e.target.value)} />
+    </Form.Field>
+    <Form.Field>
+      <label>Store id</label>
+      <input placeholder='Store id' defaultValue={sid} onChange={(e) => setsid(e.target.value)} />
+    </Form.Field>
+    <Form.Field>
+    <label>Sale date-time</label>
+      <input placeholder='sale date-time' defaultValue={sdate} onChange={(e) => setsdate(e.target.value)} />
     </Form.Field>
   </Form>
         </Modal.Description>
@@ -74,7 +86,7 @@ return() => {
           content="Create"
           labelPosition='right'
           icon='checkmark'
-          onClick={() => createCustomer()}
+          onClick={() => createSale()}
           positive
         />
       </Modal.Actions>
@@ -82,4 +94,4 @@ return() => {
   )
 }
 
-export default AddNewCustomer
+export default AddNewSale
