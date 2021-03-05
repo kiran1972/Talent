@@ -10,9 +10,9 @@ const DeleteSaleModal = (props) => {
   
   
   useEffect(() => {
-    console.log("UnMount a Component using Hook")
+    console.log("DeleteSaleModal:UnMount a Component using Hook")
 return() => {
-  console.log("UnMount a Component using Hook1")
+  console.log("DeleteSaleModal:UnMount a Component using Hook1")
 }
   },[])
   
@@ -46,8 +46,8 @@ return() => {
  * Function to Delete the Store
  **************************************/
 const deleteSale = (id) =>  {
-        console.log("Sales:deleteSale")
-        axios.delete(`/Sales/DeleteSale/${id}`)
+        console.log("DeleteSaleModal:deleteSale: id=" +id)
+        axios.delete(`/Sales/DeleteSales/${id}`)
             .then( function(res)  {
                 // handle success
                 //console.log(res.data);
@@ -95,7 +95,7 @@ const deleteSale = (id) =>  {
       <label>{sale.storeid}</label>
       <Form.Field>
       <Label as='a' color='green' ribbon>Date-Time Sold</Label>
-      <label>{sale.datesold}</label>
+      <label>{sale.dateSold}</label>
     </Form.Field>
   </Form.Field>
   </Form>

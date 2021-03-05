@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import axios from 'axios';
-import { Table, Button } from 'semantic-ui-react';
+import { Table, Button, Pagination } from 'semantic-ui-react';
 import AddNewProduct from './AddNewProduct';
 import DeleteProductModal from './DeleteProductModal';
 import UpdateProductModal from './UpdateProductModal';
@@ -20,7 +20,10 @@ export default class Products extends Component {
             openCreateModal: false, 
             openDeleteModal: false, 
             openUpdateModal: false, 
-            product: {}};
+            product: {},
+            totalProductsRec: 0, 
+            currentPage: 1
+        };
         this.fetchProductData = this.fetchProductData.bind(this);
 
     }
@@ -37,7 +40,8 @@ export default class Products extends Component {
                 console.log(res.data);
                 this.setState({
                     Product: res.data,
-                    loaded: true
+                    loaded: true ,
+                    totalProductsRec: res.data.length
                 })
 
             })
@@ -118,6 +122,15 @@ export default class Products extends Component {
         this.toggleUpdateModal();
     }
 
+/************************************************************* 
+ * Functions pageChange set the Pagination attributes 
+ *************************************************************/
+    pageChange = (e,pagData) => {
+    this.setState({currentPage: pagData.activePage})
+    console.log(pagData);
+    console.log("Customers:pageChange:Saleid:  Product id:  Store id: Sale Time: ");
+}
+
 /************************************* 
  * Using Semantic UI Modal & Form  as UI
  **************************************/
@@ -129,7 +142,9 @@ export default class Products extends Component {
         const openDeleteModal = this.state.openDeleteModal;
         const openUpdateModal = this.state.openUpdateModal;
         const product = this.state.product;
-        console.log("Products:render:Name: "+product.name+" address: "+product.address);
+        const totalProductsRec = this.state.totalProductsRec;
+        const currentPage = this.state.currentPage;
+        console.log("Products:render:currentPage: "+currentPage+" totalProductsRec: "+totalProductsRec+" Name: "+product.name+" address: "+product.address);
         if (loaded) {
             return (
                 <div>
@@ -164,7 +179,9 @@ export default class Products extends Component {
         </Table.Header>
 
         <Table.Body>
-        {Product.map((p) => {
+        {Product.map((p,index) => {
+                if((index >= ((currentPage*4)-4)) && (index < (currentPage*4))){
+                    console.log("inside if: "+index)
             return (
             <Table.Row key={p.id}>
                 <Table.Cell>{p.id}</Table.Cell>
@@ -176,8 +193,27 @@ export default class Products extends Component {
                 </Table.Cell>
             </Table.Row>
                   )
-        })}
+        }})}
         </Table.Body>
+        {/*<Table.Footer>
+            <Table.Row>
+                <Table.HeaderCell>3 People</Table.HeaderCell>
+                <Table.HeaderCell>2 Approved</Table.HeaderCell>
+                <Table.HeaderCell />
+            </Table.Row>*/}
+    
+  <Pagination
+    boundaryRange={0}
+    activePage={currentPage}
+    ellipsisItem={null}
+    firstItem={null}
+    lastItem={null}
+    siblingRange={1}
+    totalPages={Math.ceil(totalProductsRec/4)}
+    onPageChange= {(e,pagData) => this.pageChange(e,pagData)}
+  />
+
+        {/* </Table.Footer>  */}
     </Table>
          </div>
             );

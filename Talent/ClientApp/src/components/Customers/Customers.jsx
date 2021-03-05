@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import axios from 'axios';
-import { Table, Button } from 'semantic-ui-react';
+import { Table, Button, Pagination } from 'semantic-ui-react';
 import AddNewCustomer from './AddNewCustomer';
 import DeleteCustomerModal from './DeleteCustomerModal';
 import UpdateCustomerModal from './UpdateCustomerModal';
@@ -20,7 +20,10 @@ export default class Customers extends Component {
             openCreateModal: false, 
             openDeleteModal: false, 
             openUpdateModal: false, 
-            customer: {} 
+            customer: {},
+            totalCustomersRec: 0, 
+            currentPage: 1,
+            totalPages: 1 
                    };
         this.fetchCustomerData = this.fetchCustomerData.bind(this);
         }
@@ -36,8 +39,17 @@ export default class Customers extends Component {
                 console.log(res.data);
                 this.setState({
                     customers: res.data,
-                    loaded: true
+                    loaded: true,
+                    totalCustomersRec: res.data.length,
+                    totalPages: Math.ceil(res.data.length/4)
                 })
+                /* To fix the last Page Refresh on Delete to move to previous page */
+                if(((res.data.length % 4) == 0) && (this.state.currentPage > Math.ceil(res.data.length/4))){
+                    console.log("Last Page = Current page");
+                    this.setState({
+                        currentPage: (this.state.currentPage == 1)?1:this.state.currentPage - 1 
+                    })
+                }
 
             })
             .catch( (err) => {
@@ -119,6 +131,17 @@ export default class Customers extends Component {
         console.log("Customers:setStateUpdateModal:Name: "+customer.name+" address: "+customer.address);
         this.toggleUpdateModal();
     }
+
+/************************************************************* 
+ * Functions pageChange set the Pagination attributes 
+ *************************************************************/
+pageChange = (e,pagData) => {
+    this.setState({currentPage: pagData.activePage,
+                    totalPages: pagData.totalPages 
+                })
+    console.log(pagData);
+    console.log("Customers:pageChange:Saleid:  Product id:  Store id: Sale Time: ");
+}
     
 /************************************* 
  * Using Semantic UI Modal & Form  as UI
@@ -131,7 +154,9 @@ export default class Customers extends Component {
         const openDeleteModal = this.state.openDeleteModal;
         const openUpdateModal = this.state.openUpdateModal;
         const customer = this.state.customer;
-        console.log("Customers:render:Name: "+customer.name+" address: "+customer.address);
+        const totalCustomersRec = this.state.totalCustomersRec;
+        const currentPage = this.state.currentPage;
+        console.log("Customers:render:currentPage:"+currentPage+" totalCustomersRec: "+totalCustomersRec+" Name: "+customer.name+" address: "+customer.address);
         if (loaded) {
             return (
                 <div>
@@ -167,7 +192,9 @@ export default class Customers extends Component {
         </Table.Header>
 
         <Table.Body>
-        {customers.map((c) => {
+        {customers.map((c,index) => {
+            if((index >= ((currentPage*4)-4)) && (index < (currentPage*4))){
+                console.log("inside if: "+index)
             return (
             <Table.Row key={c.id}>
                 <Table.Cell>{c.id}</Table.Cell>
@@ -179,8 +206,27 @@ export default class Customers extends Component {
                 </Table.Cell>
             </Table.Row>
                   )
-        })}
+        }})}
         </Table.Body>
+        {/*<Table.Footer>
+            <Table.Row>
+                <Table.HeaderCell>3 People</Table.HeaderCell>
+                <Table.HeaderCell>2 Approved</Table.HeaderCell>
+                <Table.HeaderCell />
+            </Table.Row>*/}
+    
+  <Pagination
+    boundaryRange={0}
+    activePage={currentPage}
+    ellipsisItem={null}
+    firstItem={null}
+    lastItem={null}
+    siblingRange={1}
+    totalPages={Math.ceil(totalCustomersRec/4)}
+    onPageChange= {(e,pagData) => this.pageChange(e,pagData)}
+  />
+
+        {/* </Table.Footer>  */}
     </Table>
                 </div>
             );

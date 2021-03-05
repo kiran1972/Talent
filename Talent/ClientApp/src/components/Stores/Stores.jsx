@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import axios from 'axios';
-import { Table, Button } from 'semantic-ui-react';
+import { Table, Button, Pagination } from 'semantic-ui-react';
 import AddNewStore from './AddNewStore';
 import DeleteStoreModal from './DeleteStoreModal';
 import UpdateStoreModal from './UpdateStoreModal';
@@ -20,7 +20,11 @@ export default class Stores extends Component {
             openCreateModal: false, 
             openDeleteModal: false, 
             openUpdateModal: false, 
-            store: {} };
+            store: {}, 
+            totalStoresRec: 0, 
+            currentPage: 1,
+            totalPages: 1
+        };
         this.fetchStoreData = this.fetchStoreData.bind(this);
     }
 
@@ -36,8 +40,18 @@ export default class Stores extends Component {
                 console.log(res.data);
                 this.setState({
                     Store: res.data,
-                    loaded: true
+                    loaded: true,
+                    totalStoresRec: res.data.length,
+                    totalPages: Math.ceil(res.data.length/4)
                 })
+                
+                /* To fix the last Page Refresh on Delete to move to previous page */
+                if(((res.data.length % 4) == 0) && (this.state.currentPage > Math.ceil(res.data.length/4))){
+                    console.log("Last Page = Current page");
+                    this.setState({
+                        currentPage: (this.state.currentPage == 1)?1:this.state.currentPage - 1 
+                    })
+                }
 
             })
             .catch((err) => {
@@ -117,6 +131,16 @@ export default class Stores extends Component {
         this.toggleUpdateModal();
     }
 
+/************************************************************* 
+ * Functions pageChange set the Pagination attributes 
+ *************************************************************/
+    pageChange = (e,pagData) => {
+    this.setState({currentPage: pagData.activePage,
+                    totalPages: pagData.totalPages
+                })
+    console.log(pagData);
+    console.log("Customers:pageChange:Saleid:  Product id:  Store id: Sale Time: ");
+}
 /************************************* 
  * Using Semantic UI Modal & Form  as UI
  **************************************/
@@ -128,6 +152,9 @@ export default class Stores extends Component {
         const openDeleteModal = this.state.openDeleteModal;
         const openUpdateModal = this.state.openUpdateModal;
         const store = this.state.store;
+        const totalStoresRec = this.state.totalStoresRec;
+        const currentPage = this.state.currentPage;
+        
         console.log("Stores:render:Name: "+store.name+" address: "+store.address);
         if (loaded) {
             return (
@@ -162,7 +189,9 @@ export default class Stores extends Component {
         </Table.Header>
 
         <Table.Body>
-        {Store.map((s) => {
+        {Store.map((s,index) => {
+            if((index >= ((currentPage*4)-4)) && (index < (currentPage*4))){
+                console.log("inside if: "+index)
             return (
             <Table.Row key={s.id}>
                 <Table.Cell>{s.id}</Table.Cell>
@@ -174,8 +203,27 @@ export default class Stores extends Component {
                 </Table.Cell>
             </Table.Row>
                   )
-        })}
+        }})}
         </Table.Body>
+          {/*<Table.Footer>
+          <Table.Row>
+                <Table.HeaderCell>3 People</Table.HeaderCell>
+                <Table.HeaderCell>2 Approved</Table.HeaderCell>
+                <Table.HeaderCell />
+            </Table.Row>*/}
+    
+  <Pagination
+    boundaryRange={0}
+    activePage={currentPage}
+    ellipsisItem={null}
+    firstItem={null}
+    lastItem={null}
+    siblingRange={1}
+    totalPages={Math.ceil(totalStoresRec/4)}
+    onPageChange= {(e,pagData) => this.pageChange(e,pagData)}
+  />
+
+        {/* </Table.Footer> */}
     </Table>
                 </div>
             );

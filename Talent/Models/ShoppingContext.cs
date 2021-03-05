@@ -57,7 +57,7 @@ namespace Talent.Models
 
             modelBuilder.Entity<Sales>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                //entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.DateSold).HasColumnType("datetime");
 

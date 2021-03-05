@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import { Form, Button, Header, Image, Modal, Portal, Segment } from 'semantic-ui-react'
+import { Form, Button, Header, Image, Modal } from 'semantic-ui-react'
 import axios from 'axios'
-import Sales from './Sales';
+//import Sales from './Sales';
 // import Sales from './Sales';
 
 /************************************* 
@@ -11,7 +11,7 @@ import Sales from './Sales';
 const UpdateSaleModal = (props) => {
   
     /* const {open, toggleUpdateModal, fetchSaleData, id, name, address} = props; */
-  const {open, toggleUpdateModal, fetchSaleData, sale} = props; 
+  const {open, toggleUpdateModal, fetchSaleData, sale, customers, products, stores} = props; 
   
   const [updateCidStatus,setupdateCidStatus] =useState(false)
   const [updatePidStatus,setupdatePidStatus] =useState(false)
@@ -32,15 +32,27 @@ const UpdateSaleModal = (props) => {
 
 
    useEffect(() => {
-    console.log("Customer id: "+cid+" Product id: "+pid+" Store id: "+sid+" Sale date: "+sdate)
+
+    console.log("UpdateSaleModal:useEffect:sale:"+ sale +" Customer id: "+props.sale.customerid+" Product id: "+props.sale.productid+" Store id: "+props.sale.storeid+" Sale date: "+props.sale.dateSold)
+    
     return() => {
-  console.log("UpdateSale:UnMount a Component using Hook")
+  console.log("UpdateSaleModal:useEffect:UnMount a Component using Hook")
 
 }
   },)
    
 
- /*   const handleChange = ({target}) => {
+ /*  
+ useEffect(() => {
+
+    if (Object.keys(customer).length !== 0 && customer.constructor === Object && !loaded) {
+      setname(
+customer.name
+);
+      setaddress(customer.address);
+      setloaded(true);
+    }
+  }); const handleChange = ({target}) => {
    console.log('event.name'+ target.name)
    console.log('event.value'+ target.value)
    
@@ -64,7 +76,7 @@ const UpdateSaleModal = (props) => {
   const updateCustomerId = (e) =>{
     setcid(e.target.value)
     setupdateCidStatus(true)
-    console.log("UpdateSalesModal:updateName:"+e.target.value)
+    console.log("UpdateSalesModal:updateCustomerId:"+e.target.value)
      }
   
      
@@ -75,7 +87,7 @@ const UpdateSaleModal = (props) => {
      const updateProductId = (e) =>{
       setpid(e.target.value)
       setupdatePidStatus(true)
-      console.log("UpdateSalesModal:updateAddress:"+e.target.value)
+      console.log("UpdateSalesModal:updateProductId:"+e.target.value)
        }
 
     /************************************* 
@@ -84,7 +96,7 @@ const UpdateSaleModal = (props) => {
      const updateStoreId = (e) =>{
       setsid(e.target.value)
       setupdateSidStatus(true)
-      console.log("UpdateSalesModal:updateAddress:"+e.target.value)
+      console.log("UpdateSalesModal:updateStoreid:"+e.target.value)
        }
 
     /************************************* 
@@ -93,7 +105,7 @@ const UpdateSaleModal = (props) => {
      const updateSaleDate = (e) =>{
       setsdate(e.target.value)
       setupdateSdateStatus(true)
-      console.log("UpdateSalesModal:updateAddress:"+e.target.value)
+      console.log("UpdateSalesModal:updateSaleDate:"+e.target.value)
        }
 
 /************************************* 
@@ -101,17 +113,20 @@ const UpdateSaleModal = (props) => {
 **************************************/     
  const updateSale = (ssid) => { 
   
-  console.log("Customer id: "+cid+" Product id: "+pid+" Store id: "+sid+" Sale date: "+sdate)
+  console.log("UpdateSaleModal:updateSale:Salesid "+ssid+" Customer id: "+cid+" Product id: "+pid+" Store id: "+sid+" Sale date: "+sdate)
 
    /* Based on the field update status edited field or Props field is coppied. */    
    let sale1 = {
-    customerid: updateCidStatus?cid:sale.Customerid,
-    productid: updatePidStatus?pid:sale.Productid,
-    storeid: updateSidStatus?sid:sale.Storeid,
-    datesold:updateSdateStatus?sdate:sale.DateSold
+    Id:ssid,
+    Customerid: updateCidStatus?cid:sale.customerid,
+    Productid: updatePidStatus?pid:sale.productid,
+    Storeid: updateSidStatus?sid:sale.storeid,
+    DateSold:updateSdateStatus?sdate:sale.dateSold
      }
 
-  axios.put(`/Sales/PutSale/${ssid}`, sale1 )
+     console.log("UpdateSaleModal:updateSale:Salesid "+ssid+" sale1.customerid: "+sale1.Customerid+" sale1.productid: "+sale1.Productid+" sale1.storeid: "+sale1.Storeid+" sale1.dateSold: "+sale1.DateSold)
+
+  axios.put(`/Sales/PutSales/${ssid}`, sale1 )
   .then(function (res) {
     console.log(res);
     fetchSaleData();
@@ -140,19 +155,38 @@ const UpdateSaleModal = (props) => {
           <Form>
     <Form.Field>
       <label>Customer id</label>
-      <input placeholder='Customer id' defaultValue={cid} onChange={(e) => updateCustomerId(e)} />
+      <select class="ui dropdown"  defaultValue={sale.customerid} onChange={(e) => updateCustomerId(e)}>
+      <option value=''></option>
+      {customers.map((c) => {
+            return (
+              <option value={c.id}>{c.name}</option>
+              )
+            })}
+</select>
     </Form.Field>
     <Form.Field>
       <label>Product id</label>
-      <input placeholder='Product id' defaultValue={pid} onChange={(e) => updateProductId(e)} />
+      <select class="ui dropdown" defaultValue={sale.productid} onChange={(e) => updateProductId(e)}>
+      {products.map((p) => {
+            return (
+              <option value={p.id}>{p.name}</option>
+              )
+            })}
+</select>
     </Form.Field>
     <Form.Field>
       <label>Store id</label>
-      <input placeholder='Store id' defaultValue={sid} onChange={(e) => updateStoreId(e)} />
-    </Form.Field>
+      <select class="ui dropdown" defaultValue={sale.storeid} onChange={(e) => updateStoreId(e)}>
+      {stores.map((s) => {
+            return (
+              <option value={s.id}>{s.name}</option>
+              )
+            })}
+</select>
+ </Form.Field>
     <Form.Field>
     <label>Sale date-time</label>
-      <input placeholder='sale date-time' defaultValue={sdate} onChange={(e) => updateSaleDate(e)} />
+      <input placeholder='sale date-time' defaultValue={sale.dateSold} onChange={(e) => updateSaleDate(e)} />
     </Form.Field>
   </Form></Modal.Description>
       </Modal.Content>
