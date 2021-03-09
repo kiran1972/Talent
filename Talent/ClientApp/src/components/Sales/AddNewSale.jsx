@@ -30,6 +30,7 @@ return() => {
  const createSale = () => {
  var msg =""
   if(cid != null && pid != null && sid != null && sdate != null) {
+    
   console.log(" AddNewSales:createSale: Customer id: "+cid+" Product id: "+pid+" Store id: "+sid+" Sale date: "+sdate)
   axios.post('/Sales/PostSales', {
     productid: pid,

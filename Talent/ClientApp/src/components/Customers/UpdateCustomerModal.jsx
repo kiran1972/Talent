@@ -61,15 +61,21 @@ return() => {
      **************************************/
  const updateCustomer = (ccid) => { 
    console.log("UpdateCustomers:updateCustomer:Cid="+ccid+" CName: "+cname+" CAddress: "+caddress);
-   
+   var msg =""
     /* Based on the field update status edited Name or Props Name is coppied. */    
    let customer1 = {
     id: ccid,
     name: updateNameStatus?cname:customer.name,
     address: updateAddressStatus?caddress:customer.address
    }
-   console.log("UpdateCustomers:updateCustomer:customer1:Cid="+customer1.id+" CName: "+customer1.name+" CAddress: "+customer1.address);
    
+   setcname(updateNameStatus?cname:customer.name)
+   setcaddress(updateAddressStatus?caddress:customer.address);
+
+   console.log("UpdateCustomers:updateCustomer:customer1:Cid="+customer1.id+" CName: "+customer1.name+" CAddress: "+customer1.address);
+   if(cname != null && caddress != null ) {
+    if((cname.localeCompare("") !== 0 && caddress.localeCompare("")!== 0) ) {
+  
   axios.put(`/Customers/PutCustomer/${ccid}`, customer1 )
   .then(function (res) {
     console.log(res);
@@ -85,6 +91,28 @@ return() => {
     setupdateAddressStatus(false)
     toggleUpdateModal();
   });
+}else {
+  /* Show Alert on blank Sales details */
+if(cname.localeCompare("") === 0) {
+  msg="Customer Name field is empty..\n"
+} 
+if(caddress.localeCompare("") === 0) {
+  msg=msg+"Customer Address field is empty..\n"
+}
+msg=msg+"Please enter the correct Customer Details\n"
+alert(msg)
+ }
+} else {
+  /* Show Alert on null Sales details */
+if(cname == null) {
+  msg="Customer Name field is empty..\n"
+} 
+if(caddress == null) {
+  msg=msg+"Customer Address field is empty..\n"
+}
+msg=msg+"Please enter the correct Customer Details\n"
+alert(msg)
+ }
  }
 
 /************************************* 

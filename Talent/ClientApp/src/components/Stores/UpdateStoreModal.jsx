@@ -78,6 +78,7 @@ const UpdateStoreModal = (props) => {
  **************************************/
  const updateStore = (ccid) => { 
   
+  var msg = "";
    console.log("UpdateStores:updateStore:Cid="+ccid+" CName: "+sname+" CAddress: "+saddress);
         
    let store1 = {
@@ -86,6 +87,13 @@ const UpdateStoreModal = (props) => {
     address: updateAddressStatus?saddress:store.address
    }
 
+
+   setsname(updateNameStatus?sname:store.name)
+   setsaddress(updateAddressStatus?saddress:store.address);
+   console.log("UpdateCustomers:updateCustomer:customer1:Cid="+store1.id+" CName: "+store1.name+" CAddress: "+store1.address);
+   if(sname != null && saddress != null ) {
+    if((sname.localeCompare("") !== 0 && saddress.localeCompare("")!== 0) ) {
+  
   axios.put(`/Stores/PutStore/${ccid}`, store1 )
   .then(function (res) {
     console.log(res);
@@ -100,7 +108,30 @@ const UpdateStoreModal = (props) => {
     setupdateAddressStatus(false)
     toggleUpdateModal();
   });
+}else {
+  /* Show Alert on blank Sales details */
+if(sname.localeCompare("") === 0) {
+  msg="Customer Name field is empty..\n"
+} 
+if(saddress.localeCompare("") === 0) {
+  msg=msg+"Customer Address field is empty..\n"
+}
+msg=msg+"Please enter the correct Customer Details\n"
+alert(msg)
  }
+} else {
+  /* Show Alert on null Sales details */
+if(sname == null) {
+  msg="Customer Name field is empty..\n"
+} 
+if(saddress == null) {
+  msg=msg+"Customer Address field is empty..\n"
+}
+msg=msg+"Please enter the correct Customer Details\n"
+alert(msg)
+ }
+ 
+}
 
 
  /************************************* 

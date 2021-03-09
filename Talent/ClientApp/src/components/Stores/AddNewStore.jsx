@@ -27,6 +27,9 @@ return() => {
  * Function to Add/Create the Store using axios
  **************************************/
  const createStore = () => { 
+ var msg = "";
+  if(name != null && address != null ) {
+    if((name.localeCompare("") !== 0 && address.localeCompare("")!== 0) ) {
   axios.post('/Stores/PostStore', {
     name: name,
     address: address
@@ -40,7 +43,31 @@ return() => {
     console.log(err);
     toggleCreateModal();
   });
+}else {
+  /* Show Alert on blank Sales details */
+if(name.localeCompare("") === 0) {
+  msg="Customer Name field is empty..\n"
+} 
+if(address.localeCompare("") === 0) {
+  msg=msg+"Customer Address field is empty..\n"
+}
+msg=msg+"Please enter the correct Customer Details\n"
+alert(msg)
  }
+} else {
+  /* Show Alert on null Sales details */
+if(name == null) {
+  msg="Customer Name field is empty..\n"
+} 
+if(address == null) {
+  msg=msg+"Customer Address field is empty..\n"
+}
+msg=msg+"Please enter the correct Customer Details\n"
+alert(msg)
+ }
+ }
+
+
   return (
     <Modal
      open={open}

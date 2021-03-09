@@ -26,6 +26,9 @@ return() => {
  * Function to Add/Create the Customer using axios
  **************************************/
  const createProduct = () => { 
+  var msg =""
+  if(name != null && price != null ) {
+    if((name.localeCompare("") !== 0 && price > 0.0) ) {
   axios.post('/Products/PostProduct', {
     name: name,
     price: price
@@ -39,6 +42,28 @@ return() => {
     console.log(err);
     toggleCreateModal();
   });
+}else {
+  /* Show Alert on blank Sales details */
+if(name.localeCompare("") === 0) {
+  msg="Product Name field is empty..\n"
+} 
+if(price === 0.0) {
+  msg=msg+"Product Price field is empty..\n"
+}
+msg=msg+"Please enter the correct Product Details\n"
+alert(msg)
+ }
+} else {
+  /* Show Alert on null Sales details */
+if(name == null) {
+  msg="Product Name field is empty..\n"
+} 
+if(price == null) {
+  msg=msg+"Product Price field is empty..\n"
+}
+msg=msg+"Please enter the correct Customer Details\n"
+alert(msg)
+ }
  }
 
   /************************************* 

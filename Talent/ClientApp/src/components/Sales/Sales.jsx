@@ -156,7 +156,10 @@ fetchStoreData() {
 }
 
 /************************************************************* 
- * Functions to Learn about the life Cycle of React components
+ * Function is called when a React component gets mounted. 
+ * When component gets mounted need to fetch the list of Sales 
+ * to display. fetch list of Customers,Products and Stores to 
+ * pass it to Add and update Modal. 
  *************************************************************/
     componentDidMount() {
         console.log("Sales:componentDidMount");
@@ -247,7 +250,7 @@ pageChange = (e,pagData) => {
 }
 
 /************************************* 
- * Using Semantic UI Modal & Form  as UI
+ * Use Semantic UI Modal & Form  as UI
  **************************************/
 
     render() {

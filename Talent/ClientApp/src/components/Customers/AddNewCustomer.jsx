@@ -29,6 +29,7 @@ return() => {
  const createCustomer = () => { 
   var msg =""
   if(name != null && address != null ) {
+    if((name.localeCompare("") !== 0 && address.localeCompare("")!== 0) ) {
   axios.post('/Customers/PostCustomer', {
     name: name,
     address: address
@@ -46,10 +47,21 @@ return() => {
   });
  }else {
   /* Show Alert on blank Sales details */
-if(name == null|name == "") {
+if(name.localeCompare("") === 0) {
   msg="Customer Name field is empty..\n"
 } 
-if(address == null| address == "") {
+if(address.localeCompare("") === 0) {
+  msg=msg+"Customer Address field is empty..\n"
+}
+msg=msg+"Please enter the correct Customer Details\n"
+alert(msg)
+ }
+} else {
+  /* Show Alert on null Sales details */
+if(name == null) {
+  msg="Customer Name field is empty..\n"
+} 
+if(address == null) {
   msg=msg+"Customer Address field is empty..\n"
 }
 msg=msg+"Please enter the correct Customer Details\n"

@@ -66,13 +66,15 @@ export default class Stores extends Component {
     }
 
 /************************************************************* 
- * Functions to Learn about the life Cycle of React components
+ * Function is called when a React component gets mounted. 
+ * When component gets mounted need to Get the list of Stores 
  *************************************************************/
     componentDidMount() {
         console.log("Stores:componentDidMount");
 
         this.fetchStoreData();
     }
+
 
 /************************************************************* 
  * Functions to  toggle the status of openCreateModal between true and false
@@ -82,6 +84,7 @@ export default class Stores extends Component {
         this.setState({openCreateModal: !this.state.openCreateModal})
         console.log("Stores:toggleCreateModal")
     }
+
 
 /************************************************************* 
  * Functions to  toggle the status of openDeleteModal between true and false
@@ -98,6 +101,7 @@ export default class Stores extends Component {
     }
 
 
+
 /************************************************************* 
  * Functions setStateDeleteModal  copy the Store Row to customer variable which can be passed to
  *  the DeleteStoreModal(Child Component )
@@ -107,6 +111,7 @@ export default class Stores extends Component {
         console.log("Stores:setStateDeleteModal:Name: "+store.name+" address: "+store.address);
         this.toggleDeleteModal();
     }
+
 
  /************************************************************* 
  * Functions to  toggle the status of openUpdateModal between true and false
@@ -121,7 +126,9 @@ export default class Stores extends Component {
 
     }
 
-   /************************************************************* 
+
+
+/************************************************************* 
  * Functions setStateUpdateModal copy the Store Row to customer variable which can be passed to
  *  the UpdateStoreModal(Child Component )
  *************************************************************/
@@ -130,6 +137,7 @@ export default class Stores extends Component {
         console.log("Stores:setStateUpdateModal:Name: "+store.name+" address: "+store.address);
         this.toggleUpdateModal();
     }
+
 
 /************************************************************* 
  * Functions pageChange set the Pagination attributes 
@@ -141,8 +149,9 @@ export default class Stores extends Component {
     console.log(pagData);
     console.log("Customers:pageChange:Saleid:  Product id:  Store id: Sale Time: ");
 }
+
 /************************************* 
- * Using Semantic UI Modal & Form  as UI
+ * Use Semantic UI Modal & Form  as UI
  **************************************/
     render() {
         console.log("Stores:render");

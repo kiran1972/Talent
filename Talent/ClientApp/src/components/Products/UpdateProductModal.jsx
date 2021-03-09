@@ -80,7 +80,7 @@ return() => {
     * Function to Update the Product
     **************************************/      
  const updateProduct = (ccid) => { 
-  
+   var msg = ""
    console.log("UpdateProducts:updateProduct:Cid="+ccid+" CName: "+pname+" Cprice: "+pprice);
         
    let product1 = {
@@ -89,6 +89,11 @@ return() => {
     price: updatePriceStatus?pprice:product.price
    }
 
+   setpname(updateNameStatus?pname:product.name);
+   setpprice(updatePriceStatus?pprice:product.price);
+
+   if(pname != null && pprice != null ) {
+    if((pname.localeCompare("") !== 0 && pprice > 0.0) ) {
   axios.put(`/Products/PutProduct/${ccid}`, product1 )
   .then(function (res) {
     console.log(res);
@@ -101,6 +106,28 @@ return() => {
     setupdatePriceStatus(false)
     toggleUpdateModal();
   });
+}else {
+  /* Show Alert on blank Sales details */
+if(pname.localeCompare("") === 0) {
+  msg="Product Name field is empty..\n"
+} 
+if(pprice === 0.0) {
+  msg=msg+"Product Price field is empty..\n"
+}
+msg=msg+"Please enter the correct Product Details\n"
+alert(msg)
+ }
+} else {
+  /* Show Alert on null Sales details */
+if(pname == null) {
+  msg="Product Name field is empty..\n"
+} 
+if(pprice == null) {
+  msg=msg+"Product Price field is empty..\n"
+}
+msg=msg+"Please enter the correct Customer Details\n"
+alert(msg)
+ }
  }
 
  /************************************* 

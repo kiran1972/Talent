@@ -66,7 +66,8 @@ export default class Customers extends Component {
 
     
 /************************************************************* 
- * Functions to Learn about the life Cycle of React components
+ * Function is called when a React component gets mounted. 
+ * When component gets mounted need to Get the list of customers 
  *************************************************************/
  
     componentDidMount() {
@@ -144,7 +145,7 @@ pageChange = (e,pagData) => {
 }
     
 /************************************* 
- * Using Semantic UI Modal & Form  as UI
+ * Use Semantic UI Modal & Form as UI
  **************************************/
     render() {
         console.log("Customers:render");
