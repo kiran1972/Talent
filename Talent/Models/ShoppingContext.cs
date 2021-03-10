@@ -29,7 +29,10 @@ namespace Talent.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-7T0HC80;Database=Shopping;Integrated Security=True");
+                //optionsBuilder.UseSqlServer("Server=DESKTOP-7T0HC80;Database=Shopping;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Server=tcp:kiran72azuremssqldb.database.windows.net,1433;Initial Catalog=shopping;Persist Security Info=False;User ID=kiran72;Password=Go2azuremssqldb@2000;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30");
+                //optionsBuilder.UseSqlServer("Data Source=shopping.db");
+
             }
         }
 
