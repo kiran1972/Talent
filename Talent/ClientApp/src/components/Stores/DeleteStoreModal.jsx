@@ -56,8 +56,10 @@ const deleteStore = (id) =>  {
             })
             .catch(function(err)  {
                 // handle error
-                
+                alert(err.response.data)
                 console.log(err);
+                console.log(err.response.data);
+                
                 toggleDeleteModal();
             })
 

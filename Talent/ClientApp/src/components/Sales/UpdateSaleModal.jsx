@@ -108,11 +108,22 @@ customer.name
       console.log("UpdateSalesModal:updateSaleDate:"+e.target.value)
        }
 
+  /************************************* 
+   * Function to Cancel the UpdateSale
+   **************************************/
+   const cancelUpdateSale = () =>{
+    setupdateCidStatus(false)
+    setupdatePidStatus(false)
+    setupdateSidStatus(false)
+    setupdateSdateStatus(false)
+    toggleUpdateModal();
+    console.log("Comp1:cancelUpdateSale.....:")
+     }
 /************************************* 
 * Function to Update the Customer
 **************************************/     
  const updateSale = (ssid) => { 
-  
+ var msg = "";  
   console.log("UpdateSaleModal:updateSale:Salesid "+ssid+" Customer id: "+cid+" Product id: "+pid+" Store id: "+sid+" Sale date: "+sdate)
 
    /* Based on the field update status edited field or Props field is coppied. */    
@@ -126,18 +137,44 @@ customer.name
 
      console.log("UpdateSaleModal:updateSale:Salesid "+ssid+" sale1.customerid: "+sale1.Customerid+" sale1.productid: "+sale1.Productid+" sale1.storeid: "+sale1.Storeid+" sale1.dateSold: "+sale1.DateSold)
 
+     if(sale1.Customerid != null && sale1.Productid != null && sale1.Storeid != null && sale1.DateSold != null ) {
+    
   axios.put(`/Sales/PutSales/${ssid}`, sale1 )
   .then(function (res) {
     console.log(res);
     fetchSaleData();
+    setupdateCidStatus(false)
+    setupdatePidStatus(false)
+    setupdateSidStatus(false)
+    setupdateSdateStatus(false)
     toggleUpdateModal();
   })
   .catch(function (err) {
     console.log(err);
+    setupdateCidStatus(false)
+    setupdatePidStatus(false)
+    setupdateSidStatus(false)
+    setupdateSdateStatus(false)
     toggleUpdateModal();
   });
- }
+}else {
+if(sale1.Customerid != null) {
+  msg="Customer Name field is empty(null)..\n"
+} 
+if(sale1.Productid != null) {
+  msg=msg+"Product Name field is empty(null)..\n"
+}
+if(sale1.Storeid != null) {
+  msg=msg+"Store Name field is empty(null)..\n"
+}
+if(sale1.DateSold != null) {
+  msg=msg+"Date Sold field is empty(null)..\n"
+}
+msg=msg+"Please enter the correct Sales Details\n"
+alert(msg)
+ } 
 
+ }
 
 /************************************* 
  * Using Semantic UI Modal & Form  as UI
@@ -186,12 +223,12 @@ customer.name
  </Form.Field>
     <Form.Field>
     <label>Sale date-time</label>
-      <input placeholder='sale date-time' defaultValue={sale.dateSold} onChange={(e) => updateSaleDate(e)} />
+      <input type="datetime-local" placeholder='sale date-time' defaultValue={sale.dateSold} onChange={(e) => updateSaleDate(e)} />
     </Form.Field>
   </Form></Modal.Description>
       </Modal.Content>
       <Modal.Actions>
-        <Button color='black' onClick={() => toggleUpdateModal()}>
+        <Button color='black' onClick={() => cancelUpdateSale()}>
           Cancel
         </Button>
         <Button

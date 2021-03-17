@@ -75,6 +75,15 @@ return() => {
       console.log("Comp1:updateAddress:"+e.target.value)
        }
     
+  /************************************* 
+   * Function to Cancel the UpdateProduct
+   **************************************/
+   const cancelUpdateProduct = () =>{
+    setupdateNameStatus(false)
+    setupdatePriceStatus(false)
+    toggleUpdateModal();
+    console.log("Comp1:cancelUpdateProduct.....:")
+     }
 
    /************************************* 
     * Function to Update the Product
@@ -92,11 +101,13 @@ return() => {
    setpname(updateNameStatus?pname:product.name);
    setpprice(updatePriceStatus?pprice:product.price);
 
-   if(pname != null && pprice != null ) {
-    if((pname.localeCompare("") !== 0 && pprice > 0.0) ) {
+   if(product1.name != null && product1.price != null ) {
+    if((product1.name.localeCompare("") !== 0 && product1.price > 0.0) ) {
   axios.put(`/Products/PutProduct/${ccid}`, product1 )
   .then(function (res) {
     console.log(res);
+    setupdateNameStatus(false)
+    setupdatePriceStatus(false)
     fetchProductData();
     toggleUpdateModal();
 })
@@ -108,10 +119,10 @@ return() => {
   });
 }else {
   /* Show Alert on blank Sales details */
-if(pname.localeCompare("") === 0) {
+if(product1.name.localeCompare("") === 0) {
   msg="Product Name field is empty..\n"
 } 
-if(pprice === 0.0) {
+if(product1.price === 0.0) {
   msg=msg+"Product Price field is empty..\n"
 }
 msg=msg+"Please enter the correct Product Details\n"
@@ -119,13 +130,13 @@ alert(msg)
  }
 } else {
   /* Show Alert on null Sales details */
-if(pname == null) {
+if(product1.name == null) {
   msg="Product Name field is empty..\n"
 } 
-if(pprice == null) {
+if(product1.price == null) {
   msg=msg+"Product Price field is empty..\n"
 }
-msg=msg+"Please enter the correct Customer Details\n"
+msg=msg+"Please enter the correct Product Details\n"
 alert(msg)
  }
  }
@@ -155,7 +166,7 @@ alert(msg)
   </Form></Modal.Description>
       </Modal.Content>
       <Modal.Actions>
-        <Button color='black' onClick={() => toggleUpdateModal()}>
+        <Button color='black' onClick={() => cancelUpdateProduct()}>
           Cancel
         </Button>
         <Button

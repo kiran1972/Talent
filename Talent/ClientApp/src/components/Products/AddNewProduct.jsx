@@ -61,7 +61,7 @@ if(name == null) {
 if(price == null) {
   msg=msg+"Product Price field is empty..\n"
 }
-msg=msg+"Please enter the correct Customer Details\n"
+msg=msg+"Please enter the correct Product Details\n"
 alert(msg)
  }
  }

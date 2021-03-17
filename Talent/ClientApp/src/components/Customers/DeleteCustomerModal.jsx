@@ -44,6 +44,7 @@ return() => {
  * Function to Delete the Customer
  **************************************/
 const deleteCustomer = (id) =>  {
+        
         console.log("Customers:deleteCustomer")
         axios.delete(`/Customers/DeleteCustomer/${id}`)
             .then( function(res)  {
@@ -52,9 +53,10 @@ const deleteCustomer = (id) =>  {
                 toggleDeleteModal();
             })
             .catch(function(err)  {
+
                 // handle error
-                
-                console.log(err);
+                alert(err.response.data)
+                console.log(err.response.data);
                 toggleDeleteModal();
             })
 

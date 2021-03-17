@@ -53,7 +53,7 @@ const UpdateStoreModal = (props) => {
  */
 
 /************************************* 
- * Function to Update the Store
+ * Function to Update the Store Name Field
  **************************************/
   const updateName = (e) =>{
     setsname(e.target.value)
@@ -72,6 +72,15 @@ const UpdateStoreModal = (props) => {
       console.log("UpdateStoreModal:updateAddress:"+e.target.value)
        }
    
+  /************************************* 
+   * Function to Cancel the UpdateStore
+   **************************************/
+   const cancelUpdateStore = () =>{
+    setupdateNameStatus(false);
+    setupdateAddressStatus(false);
+    toggleUpdateModal();
+    console.log("Comp1:cancelUpdateStore.....:")
+     }
 
  /************************************* 
  * Function to Update the Store
@@ -111,23 +120,23 @@ const UpdateStoreModal = (props) => {
 }else {
   /* Show Alert on blank Sales details */
 if(sname.localeCompare("") === 0) {
-  msg="Customer Name field is empty..\n"
+  msg="Store Name field is empty..\n"
 } 
 if(saddress.localeCompare("") === 0) {
-  msg=msg+"Customer Address field is empty..\n"
+  msg=msg+"Store Address field is empty..\n"
 }
-msg=msg+"Please enter the correct Customer Details\n"
+msg=msg+"Please enter the correct Store Details\n"
 alert(msg)
  }
 } else {
   /* Show Alert on null Sales details */
 if(sname == null) {
-  msg="Customer Name field is empty..\n"
+  msg="Store Name field is empty..\n"
 } 
 if(saddress == null) {
-  msg=msg+"Customer Address field is empty..\n"
+  msg=msg+"Store Address field is empty..\n"
 }
-msg=msg+"Please enter the correct Customer Details\n"
+msg=msg+"Please enter the correct Store Details\n"
 alert(msg)
  }
  
@@ -164,7 +173,7 @@ alert(msg)
       <Button
         content='cancel'
         negative
-        onClick={() => toggleUpdateModal()}
+        onClick={() => cancelUpdateStore()}
       />
 
       <Button

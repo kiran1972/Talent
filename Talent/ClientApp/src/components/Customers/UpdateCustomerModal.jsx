@@ -18,6 +18,10 @@ const UpdateCustomerModal = (props) => {
 
    useEffect(() => {
     console.log("UpdateCustomers:useEffect:Name: "+cname+" address: "+caddress);
+    if(customer.name == null &&  customer.address == null) {
+      setcname(customer.name)
+      setcaddress(customer.address);
+    }
 return() => {
   console.log("UpdateCustomer:UnMount a Component using Hook")
 
@@ -54,7 +58,17 @@ return() => {
     setupdateAddressStatus(true)
     console.log("Comp1:updateAddress:"+e.target.value)
      }
-  
+ 
+ /************************************* 
+   * Function to Cancel the Update
+   **************************************/
+   const cancelUpdateCustomer = () =>{
+    setupdateNameStatus(false);
+    setupdateAddressStatus(false);
+    toggleUpdateModal();
+    console.log("Comp1:cancelUpdateCustomer.....:")
+     }
+ 
 
      /************************************* 
       * Function to Update the Customer
@@ -72,9 +86,13 @@ return() => {
    setcname(updateNameStatus?cname:customer.name)
    setcaddress(updateAddressStatus?caddress:customer.address);
 
-   console.log("UpdateCustomers:updateCustomer:customer1:Cid="+customer1.id+" CName: "+customer1.name+" CAddress: "+customer1.address);
-   if(cname != null && caddress != null ) {
-    if((cname.localeCompare("") !== 0 && caddress.localeCompare("")!== 0) ) {
+   
+   console.log("UpdateCustomers:updateCustomer:updateNameStatus="+updateNameStatus+" updateAddressStatus: "+updateAddressStatus);
+   console.log("UpdateCustomers:updateCustomer:customer1:id="+customer1.id+" CName: "+customer1.name+" customer1:address: "+customer1.address);
+   console.log("UpdateCustomers:updateCustomer:customer:name="+customer.name+" customer.address: "+customer.address);
+   
+   if(customer1.name != null && customer1.address != null ) {
+    if((customer1.name.localeCompare("") !== 0 && customer1.address.localeCompare("")!== 0) ) {
   
   axios.put(`/Customers/PutCustomer/${ccid}`, customer1 )
   .then(function (res) {
@@ -93,26 +111,26 @@ return() => {
   });
 }else {
   /* Show Alert on blank Sales details */
-if(cname.localeCompare("") === 0) {
+if(customer1.name.localeCompare("") === 0) {
   msg="Customer Name field is empty..\n"
 } 
-if(caddress.localeCompare("") === 0) {
+if(customer1.address.localeCompare("") === 0) {
   msg=msg+"Customer Address field is empty..\n"
 }
 msg=msg+"Please enter the correct Customer Details\n"
 alert(msg)
  }
 } else {
-  /* Show Alert on null Sales details */
-if(cname == null) {
-  msg="Customer Name field is empty..\n"
+if(customer1.name == null) {
+  msg="Customer Name field is empty(null)..\n"
 } 
-if(caddress == null) {
-  msg=msg+"Customer Address field is empty..\n"
+if(customer1.address == null) {
+  msg=msg+"Customer Address field is empty(null)..\n"
 }
 msg=msg+"Please enter the correct Customer Details\n"
 alert(msg)
- }
+ } 
+ 
  }
 
 /************************************* 
@@ -140,7 +158,7 @@ alert(msg)
   </Form></Modal.Description>
       </Modal.Content>
       <Modal.Actions>
-        <Button color='black' onClick={() => toggleUpdateModal()}>
+        <Button color='black' onClick={() => cancelUpdateCustomer()}>
           Cancel
         </Button>
         <Button
