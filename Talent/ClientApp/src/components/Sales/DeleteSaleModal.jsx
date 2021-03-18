@@ -76,7 +76,7 @@ const deleteSale = (id) =>  {
      >
       <Modal.Header>Are you sure you want to delete Sale ?</Modal.Header>
       <Modal.Content image>
-        <Image size='medium' src='./online_sales.jpg' wrapped />
+        <Image size='medium' src='./electronic-sale.jpg' wrapped />
         <Modal.Description>
           <Header>Sale details</Header>
           <Form>

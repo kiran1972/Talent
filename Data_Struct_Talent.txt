@@ -1,0 +1,26 @@
+Create database shopping;
+
+use shopping;
+
+Create Table Customer
+(Id int Primary Key IDENTITY(1,1), 
+Name nvarchar(100) NOT NULL , 
+Address nvarchar(200));	
+
+
+Create Table Product
+(Id int Primary Key IDENTITY(1,1), 
+Name nvarchar(100) NOT NULL , 
+Price decimal(10,2) Default(0.0));	
+
+Create Table Store
+(Id int Primary Key IDENTITY(1,1), 
+Name nvarchar(100) NOT NULL , 
+Address nvarchar(200));	
+
+Create Table Sales
+(Id int Primary Key IDENTITY(1,1),
+ Productid int NOT NULL,
+ Customerid int NOT NULL,
+ Storeid int NOT NULL,
+ DateSold datetime NOT NULL);

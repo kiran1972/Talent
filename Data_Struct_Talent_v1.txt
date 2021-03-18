@@ -1,0 +1,104 @@
+/******** DMA Schema Migration Deployment Script      Script Date: 15/03/2021 9:30:45 am ********/
+
+/****** Object:  Table [dbo].[Customer]    Script Date: 15/03/2021 9:30:43 am ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Customer]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Customer](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](100) COLLATE Latin1_General_CI_AS NOT NULL,
+	[Address] [nvarchar](200) COLLATE Latin1_General_CI_AS NULL,
+ CONSTRAINT [PK__Customer__3214EC077DB4E689] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+)
+END
+GO
+/****** Object:  Table [dbo].[Product]    Script Date: 15/03/2021 9:30:45 am ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Product]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Product](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](100) COLLATE Latin1_General_CI_AS NOT NULL,
+	[Price] [decimal](10, 2) NULL,
+ CONSTRAINT [PK__Product__3214EC07DA46E690] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DF__Product__Price__5629CD9C]') AND type = 'D')
+BEGIN
+ALTER TABLE [dbo].[Product] ADD  CONSTRAINT [DF__Product__Price__5629CD9C]  DEFAULT ((0.0)) FOR [Price]
+END
+
+GO
+/****** Object:  Table [dbo].[Store]    Script Date: 15/03/2021 9:30:45 am ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Store]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Store](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](100) COLLATE Latin1_General_CI_AS NOT NULL,
+	[Address] [nvarchar](200) COLLATE Latin1_General_CI_AS NULL,
+ CONSTRAINT [PK__Store__3214EC0758A28BB8] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+)
+END
+GO
+/****** Object:  Table [dbo].[Sales]    Script Date: 15/03/2021 9:30:45 am ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Sales]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Sales](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Productid] [int] NOT NULL,
+	[Customerid] [int] NOT NULL,
+	[Storeid] [int] NOT NULL,
+	[DateSold] [datetime] NOT NULL,
+ CONSTRAINT [PK__Sales__3214EC07305FA530] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+)
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Sales_Customer]') AND parent_object_id = OBJECT_ID(N'[dbo].[Sales]'))
+ALTER TABLE [dbo].[Sales]  WITH CHECK ADD  CONSTRAINT [FK_Sales_Customer] FOREIGN KEY([Customerid])
+REFERENCES [dbo].[Customer] ([Id])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Sales_Customer]') AND parent_object_id = OBJECT_ID(N'[dbo].[Sales]'))
+ALTER TABLE [dbo].[Sales] CHECK CONSTRAINT [FK_Sales_Customer]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Sales_Product]') AND parent_object_id = OBJECT_ID(N'[dbo].[Sales]'))
+ALTER TABLE [dbo].[Sales]  WITH CHECK ADD  CONSTRAINT [FK_Sales_Product] FOREIGN KEY([Productid])
+REFERENCES [dbo].[Product] ([Id])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Sales_Product]') AND parent_object_id = OBJECT_ID(N'[dbo].[Sales]'))
+ALTER TABLE [dbo].[Sales] CHECK CONSTRAINT [FK_Sales_Product]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Sales_Store]') AND parent_object_id = OBJECT_ID(N'[dbo].[Sales]'))
+ALTER TABLE [dbo].[Sales]  WITH CHECK ADD  CONSTRAINT [FK_Sales_Store] FOREIGN KEY([Storeid])
+REFERENCES [dbo].[Store] ([Id])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Sales_Store]') AND parent_object_id = OBJECT_ID(N'[dbo].[Sales]'))
+ALTER TABLE [dbo].[Sales] CHECK CONSTRAINT [FK_Sales_Store]
+GO
+

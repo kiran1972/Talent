@@ -140,11 +140,11 @@ alert(msg)
     <Modal
     open={open}
      >
-      <Modal.Header>Edit Customer</Modal.Header>
+      <Modal.Header>C U S T O M E R</Modal.Header>
       <Modal.Content image>
         <Image size='medium' src='./online_customers.jpg' wrapped />
         <Modal.Description>
-          <Header>Customer details</Header>
+          <Header>Edit Customer details</Header>
           
           <Form>
     <Form.Field>

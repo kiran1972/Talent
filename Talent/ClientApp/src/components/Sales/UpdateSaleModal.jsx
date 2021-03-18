@@ -183,11 +183,11 @@ alert(msg)
     <Modal
     open={open}
      >
-      <Modal.Header>Edit Sale</Modal.Header>
+      <Modal.Header>S A L E S</Modal.Header>
       <Modal.Content image>
-        <Image size='medium' src='./online_sales.jpg' wrapped />
+        <Image size='medium' src='./electronic-sale.jpg' wrapped />
         <Modal.Description>
-          <Header>Sale details</Header>
+          <Header>Edit Sale details</Header>
           
           <Form>
     <Form.Field>

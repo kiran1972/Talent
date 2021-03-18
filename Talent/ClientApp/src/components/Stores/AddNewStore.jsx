@@ -72,11 +72,11 @@ alert(msg)
     <Modal
      open={open}
      >
-      <Modal.Header>C U S T O M E R</Modal.Header>
+      <Modal.Header>S T O R E</Modal.Header>
       <Modal.Content image>
-        <Image size='medium' src='./online_customers.jpg' wrapped />
+        <Image size='medium' src='./electronic-store.jpg' wrapped />
         <Modal.Description>
-          <Header>Default Profile Image</Header>
+          <Header>Add Store Details</Header>
           <Form>
     <Form.Field>
       <label>Store Name</label>

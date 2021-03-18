@@ -70,7 +70,7 @@ const deleteProduct = (id) =>  {
      >
       <Modal.Header>Are you sure you want to delete Product ?</Modal.Header>
       <Modal.Content image>
-        <Image size='medium' src='./online_customers.jpg' wrapped />
+        <Image size='medium' src='./comp_parts.jpg' wrapped />
         <Modal.Description>
           <Header>Product details</Header>
           <Form>
@@ -84,7 +84,7 @@ const deleteProduct = (id) =>  {
     </Form.Field>
     <Form.Field>
       <Label as='a' color='green' ribbon>product price       </Label>
-      <label>{product.price}</label>
+      <label>${product.price}</label>
     </Form.Field>
   </Form>
         </Modal.Description>

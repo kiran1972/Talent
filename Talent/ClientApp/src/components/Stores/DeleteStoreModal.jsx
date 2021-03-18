@@ -75,7 +75,7 @@ const deleteStore = (id) =>  {
      >
       <Modal.Header>Are you sure you want to delete Store ?</Modal.Header>
       <Modal.Content image>
-        <Image size='medium' src='./online_customers.jpg' wrapped />
+        <Image size='medium' src='./electronic-store.jpg' wrapped />
         <Modal.Description>
           <Header>Store details</Header>
           <Form>

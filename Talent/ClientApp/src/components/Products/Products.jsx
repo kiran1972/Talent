@@ -187,7 +187,7 @@ export default class Products extends Component {
             <Table.Row key={p.id}>
                 <Table.Cell>{p.id}</Table.Cell>
                 <Table.Cell>{p.name}</Table.Cell>
-                <Table.Cell>{p.price}</Table.Cell>
+                <Table.Cell>${p.price}</Table.Cell>
                 <Table.Cell>
                   <Button color='purple' content='Edit' onClick={() => this.setStateUpdateModal(p)} />
                   <Button color='red' content='Delete' onClick={() => this.setStateDeleteModal(p)} />

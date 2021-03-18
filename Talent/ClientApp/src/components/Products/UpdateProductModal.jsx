@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Form, Button, Header, Image, Modal, Portal, Segment } from 'semantic-ui-react'
+import { Label, Input, Form, Button, Header, Image, Modal, Portal, Segment } from 'semantic-ui-react'
 import axios from 'axios'
 
 
@@ -148,11 +148,11 @@ alert(msg)
     <Modal
     open={open}
      >
-      <Modal.Header>Edit Product</Modal.Header>
+      <Modal.Header>P R O D U C T</Modal.Header>
       <Modal.Content image>
-        <Image size='medium' src='./online_customers.jpg' wrapped />
+        <Image size='medium' src='./comp_parts.jpg' wrapped />
         <Modal.Description>
-          <Header>Product details</Header>
+          <Header>Edit Product details</Header>
           
     <Form>
     <Form.Field>
@@ -161,7 +161,10 @@ alert(msg)
       </Form.Field>
     <Form.Field>
       <label>Product Price</label>
-      <input placeholder='Product Price' name ='pprice' defaultValue={product.price} onChange={(e) => updatePrice(e)} />
+      <Input labelPosition='right' type="text" data-type="currency" placeholder='Product Price' name ='pprice' pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" defaultValue={product.price} onChange={(e) => updatePrice(e)}>
+      <Label basic>$</Label>
+      <input />
+      </Input >    
     </Form.Field>
   </Form></Modal.Description>
       </Modal.Content>

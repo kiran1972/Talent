@@ -109,7 +109,7 @@ alert(msg)
      >
       <Modal.Header>S A L E S</Modal.Header>
       <Modal.Content image>
-        <Image size='medium' src='./online_customers.jpg' wrapped />
+        <Image size='medium' src='./electronic-sale.jpg' wrapped />
         <Modal.Description>
           <Header>Add Sale Details</Header>
           <Form>

@@ -100,7 +100,7 @@ alert(msg)
       <Modal.Content image>
         <Image size='medium' src='./online_customers.jpg' wrapped />
         <Modal.Description>
-          <Header>Default Profile Image</Header>
+          <Header>Add Customer Details</Header>
           <Form>
     <Form.Field>
       <label>Customer Name</label>
