@@ -321,7 +321,7 @@ pageChange = (e,pagData) => {
             
             <Table.Row key={s.id}>
                 <Table.Cell>{s.id}</Table.Cell>
-                <Table.Cell>{s.dateSold}</Table.Cell>
+            <Table.Cell>{new Date(s.dateSold).toDateString()+" "+new Date(s.dateSold).getHours()+":"+new Date(s.dateSold).getMinutes()+":"+new Date(s.dateSold).getSeconds()}</Table.Cell>
                 <Table.Cell>{s.customer.name}</Table.Cell>
                 <Table.Cell>{s.product.name}</Table.Cell>
                 <Table.Cell>{s.store.name}</Table.Cell>
